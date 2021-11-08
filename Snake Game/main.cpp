@@ -1,19 +1,16 @@
 #include <iostream>
+#include <conio.h>
 using namespace std;
 
 bool gameOver;
 const int width = 20;
 const int height = 20;
 int x, y, fruitX, fruitY, score;
-
-enum eDirection {
-	STOP = 0, LEFT, RIGHT, UP, DOWN
-};
-
+enum eDirection { STOP = 0, LEFT, RIGHT, UP, DOWN };
 eDirection dir;
 
-void Setup() {
-
+void Setup()
+{
 	gameOver = false;
 	dir = STOP;
 
@@ -26,7 +23,8 @@ void Setup() {
 	score = 0;
 }
 
-void Draw() {
+void Draw()
+{
 	system("cls");
 	
 	//Print top of the screen
@@ -72,17 +70,31 @@ void Draw() {
 	gameOver = true;
 }
 
-void Input() {
+void Input()
+{
+	if (_kbhit())
+	{
+		switch (_getch())
+		{
+		case 'w': dir = UP; break;
+		case 'a': dir = LEFT; break;
+		case 's': dir = DOWN; break;
+		case 'd': dir = RIGHT; break;
+		case 'x': gameOver = true; break;
+		}
+	}
+}
+
+void Logic()
+{
 
 }
 
-void Logic() {
-
-}
-
-int main() {
+int main()
+{
 	Setup();
-	while (!gameOver) {
+	while (!gameOver)
+	{
 		Draw();
 		Input();
 		Logic();
