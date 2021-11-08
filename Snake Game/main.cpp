@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <Windows.h>
 using namespace std;
 
 bool gameOver;
@@ -25,6 +26,7 @@ void Setup()
 
 void Draw()
 {
+	Sleep(10);
 	system("cls");
 	
 	//Print top of the screen
@@ -88,11 +90,11 @@ void Input()
 	{
 		switch (_getch())
 		{
-		case 'w': dir = UP; break;
-		case 'a': dir = LEFT; break;
-		case 's': dir = DOWN; break;
-		case 'd': dir = RIGHT; break;
-		case 'x': gameOver = true; break;
+		case 'w': if (dir != DOWN) { dir = UP; } break;
+		case 'a': if (dir != RIGHT) { dir = LEFT; } break;
+		case 's': if (dir != UP) { dir = DOWN; } break;
+		case 'd': if (dir != LEFT) { dir = RIGHT; } break;
+		case 'x': dir = STOP; break;
 		}
 	}
 }
@@ -105,7 +107,7 @@ void Logic()
 	tailX[0] = x;
 	tailY[0] = y;
 
-	for (int i = 1; i < nTail; i++)
+	for (int i = 1; i <= nTail; i++)
 	{
 		prev2X = tailX[i];
 		prev2Y = tailY[i];
@@ -132,8 +134,26 @@ void Logic()
 	default: break;
 	}
 
-	if (x == width || x < 0 || y == height || y < 0 )
-	{ gameOver = true; }
+	//if (x > width || x < 0 || y > height || y < 0 )
+	//{ gameOver = true; }
+
+	if (x >= width)
+	{ x = 0; }
+	else if (x < 0)
+	{ x = width - 1; }
+
+	if (y >= height)
+	{ y = 0; }
+	else if (y < 0)
+	{ y = height - 1; }
+
+	for (int i = 0; i < nTail; i++)
+	{
+		if (tailX[i] == x && tailY[i] == y)
+		{
+			gameOver = true;
+		}
+	}
 
 	if (x == fruitX && y == fruitY) {
 		fruitX = rand() % width;
