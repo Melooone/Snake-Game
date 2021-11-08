@@ -67,7 +67,6 @@ void Draw()
 	{ cout << "#"; }
 	cout << endl;
 
-	gameOver = true;
 }
 
 void Input()
@@ -87,7 +86,25 @@ void Input()
 
 void Logic()
 {
+	switch (dir)
+	{
+	case UP:
+		y--;
+		break;
+	case LEFT:
+		x--;
+		break;
+	case DOWN:
+		y++;
+		break;
+	case RIGHT:
+		x++;
+		break;
+	default: break;
+	}
 
+	if (x == width || x < 0 || y == height || y < 0 )
+	{ gameOver = true; }
 }
 
 int main()
@@ -98,7 +115,6 @@ int main()
 		Draw();
 		Input();
 		Logic();
-		//Sleep(10);
 	}
 	return 0;
 }
